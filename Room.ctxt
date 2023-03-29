@@ -1,0 +1,22 @@
+#BlueJ class context
+comment0.target=Room
+comment0.text=\r\n\ Classe\ Room\ -\ un\ lieu\ du\ jeu\ d'aventure\ Zuul.\r\n\r\n\ @author\ Alo\u00EFs\ Fournier\r\n\ @version\ 2023.15.02\r\n\ \r\n
+comment1.params=pRoomName
+comment1.target=Room(java.lang.String)
+comment1.text=\r\n\ Constructeur\ de\ la\ classe\ Room\r\n\ @param\ pRoomName\r\n
+comment2.params=
+comment2.target=java.lang.String\ getDescription()
+comment2.text=\r\n\ Retourne\ la\ description\ de\ la\ salle\r\n\ @return\ String\r\n
+comment3.params=pDirection\ pRoom
+comment3.target=void\ setExit(java.lang.String,\ Room)
+comment3.text=\r\n\ D\u00E9finit\ les\ sorties\ de\ la\ salle\ dans\ la\ direction\ indiqu\u00E9e\r\n\ @param\ pDirection\r\n\ @param\ pRoom\r\n
+comment4.params=pDirection
+comment4.target=Room\ getExit(java.lang.String)
+comment4.text=\r\n\ Retourne\ la\ salle\ dans\ la\ direction\ indiqu\u00E9e\r\n\ @param\ pDirection\r\n\ @return\ Room\r\n
+comment5.params=
+comment5.target=java.lang.String\ getExitString()
+comment5.text=\r\n\ Retourne\ les\ sorties\ d'une\ salle\ en\ une\ String\r\n\ @return\ String\r\n
+comment6.params=
+comment6.target=java.lang.String\ getLongDescription()
+comment6.text=\r\n\ Retourne\ la\ description\ compl\u00E8te\ de\ la\ salle\r\n\ @return\ Description\ compl\u00E8te\ de\ la\ salle\r\n
+numComments=7
