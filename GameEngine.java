@@ -6,6 +6,7 @@
 public class GameEngine
 {
     private Room aCurrentRoom;
+    private Room aPreviousRoom;
     private Parser aParser;
     private UserInterface aGui;
     /**
@@ -122,6 +123,7 @@ public class GameEngine
 
         // Initial Room
         this.aCurrentRoom = vLimbo;
+        this.aPreviousRoom = vLimbo;
     }
     
     /**
@@ -143,6 +145,11 @@ public class GameEngine
         
         String vDirection = pCommand.getSecondWord();
         
+        if (pCommand.getCommandWord().equals("back")) {
+            this.aCurrentRoom = this.aPreviousRoom;
+            this.printLocationInfo();
+            return;
+        }
         vNextRoom = this.aCurrentRoom.getExit(vDirection);
         
         if (vNextRoom == null) {
@@ -154,6 +161,7 @@ public class GameEngine
         if (vNextRoom == this.aCurrentRoom) {
             System.out.println("You are already in " + this.aCurrentRoom.getDescription());
         } else {
+            this.aPreviousRoom = this.aCurrentRoom;
             this.aCurrentRoom = vNextRoom;
             this.printLocationInfo();
         }
@@ -245,5 +253,4 @@ public class GameEngine
         this.aGui.println( "Thank you for playing.  Good bye." );
         this.aGui.enable( false );
     }
-
 } // Game
