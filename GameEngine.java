@@ -1,12 +1,5 @@
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.Stack;
-
 /**
- * Classe Game - le moteur du jeu d'aventure Zuul.
+ * Classe GameEngine - le moteur du jeu d'aventure Zuul.
  *
  * @author Aloïs Fournier
  */
@@ -132,21 +125,21 @@ public class GameEngine
         vHell.setExit("south", vLimbo);
 
         
-        Item vLordBlessing = new Item("Lord\'s blessing", "holy relic", 10);
-        Item vPriestRobe = new Item("Priest\'s robe", "holy relic", 5);
-        Item vDeathScythe = new Item("Death\'s scythe", "unholy weapon to bring death upon mankind", -5);
-        Item vIvoryCross = new Item("Ivory cross", "Holy cross from the holy crusades", 7);
-        Item vHolyWater = new Item("Holy water", "Flask of water from Jerusalem", 2);
-        Item vHellBible = new Item("Hell\'s bible", "Bible from the devil himself, contains evil but useful spells", -5);
-        Item vBible = new Item("Bible", "Holy book from the Lord", 2);
-        Item vHolyGrail = new Item("Holy grail", "Holy relic from the holy crusades", 10);
-        Item vPurseOfCoins = new Item("Purse of coins", "The last 30 coins from the purse of Judas", -10);
-        Item vSplinterOfCharon = new Item("Splinter of Charon", "Splinter of the boat of the underworld", 1);
-        Item vViolentFire = new Item("Violent fire", "Fire from the violent, could be useful", -1);
-        Item vBloodFlask = new Item("Blood flask", "Flask of blood from Phlegethon, the river of blood", -1);
-        Item vMercyOfVirgil = new Item("Mercy of Virgil", "Mercy of the poet Virgil, the most respected pagan of hell", 5);
-        Item vEyesOfTheGorgon = new Item("Eyes of the Gorgon", "Eyes of the Gorgon, the most feared monster of hell", -3);
-        Item vHeadOfLucifer = new Item("Head of Lucifer", "Head of Lucifer, the most feared demon of hell", 0);
+        Item vLordBlessing = new Item("Lord\'s blessing", "holy relic", 10, 0);
+        Item vPriestRobe = new Item("Priest\'s robe", "holy relic", 5, 2);
+        Item vDeathScythe = new Item("Death\'s scythe", "unholy weapon to bring death upon mankind", -5, 6);
+        Item vIvoryCross = new Item("Ivory cross", "Holy cross from the holy crusades", 7, 1);
+        Item vHolyWater = new Item("Holy water", "Flask of water from Jerusalem", 2, 1);
+        Item vHellBible = new Item("Hell\'s bible", "Bible from the devil himself, contains evil but useful spells", -5, 3);
+        Item vBible = new Item("Bible", "Holy book from the Lord", 2, 1);
+        Item vHolyGrail = new Item("Holy grail", "Holy relic from the holy crusades", 10, 2);
+        Item vPurseOfCoins = new Item("Purse of coins", "The last 30 coins from the purse of Judas", -10, 1);
+        Item vSplinterOfCharon = new Item("Splinter of Charon", "Splinter of the boat of the underworld", 1, 3);
+        Item vViolentFire = new Item("Violent fire", "Fire from the violent, could be useful", -1, 1);
+        Item vBloodFlask = new Item("Blood flask", "Flask of blood from Phlegethon, the river of blood", -1, 2);
+        Item vMercyOfVirgil = new Item("Mercy of Virgil", "Mercy of the poet Virgil, the most respected pagan of hell", 5, 0);
+        Item vEyesOfTheGorgon = new Item("Eyes of the Gorgon", "Eyes of the Gorgon, the most feared monster of hell", -3, 3);
+        Item vHeadOfLucifer = new Item("Head of Lucifer", "Head of Lucifer, the most feared demon of hell", 0, 9);
 
 
         // Add Items to rooms
@@ -241,21 +234,7 @@ public class GameEngine
     private void printHelp() {
         this.aGui.println(this.aParser.getCommandString());
     }
-    
-    /**
-     * Quitte le jeu
-     * @param pCommand La commande
-     * @return true si le jeu doit être quitté, false sinon
-     */
-    private boolean quit(final Command pCommand) {
-        if (pCommand.hasSecondWord()) {
-            this.aGui.println("Quit What ?");
-            return false;
-        } else {
-            return true;
-        }
-    }
-    
+
     /**
      * Given a command, process (that is: execute) the command.
      * If this command ends the game, true is returned, otherwise false is
@@ -329,6 +308,11 @@ public class GameEngine
         
         if (!this.aPlayer.getCurrentRoom().hasItem(vItemName) && !this.aPlayer.hasItem(vItemName)) {
             this.aGui.println("There is no " + vItemName + " in this room.");
+            return;
+        }
+
+        if (!this.aPlayer.canCarry(this.aPlayer.getCurrentRoom().getItem(vItemName).getWeight())) {
+            this.aGui.println("You can't carry " + vItemName + " because it's too heavy. Drop some Items first.");
             return;
         }
 

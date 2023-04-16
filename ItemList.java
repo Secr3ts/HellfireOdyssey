@@ -17,7 +17,9 @@ public class ItemList {
     }
 
     public void removeItem(final String pItemName) {
-        this.aItemList.remove(pItemName);
+        if (this.aItemList.containsKey(pItemName)) {
+            this.aItemList.remove(pItemName);
+        }
     }
 
     public boolean hasItem(final String pItemName) {

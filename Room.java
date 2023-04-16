@@ -14,7 +14,7 @@ public class Room
     private String aDescription;
     private HashMap<String, Room> aExits;
     private String aImageName;
-    private HashMap<String, Item> aItem;
+    private ItemList aItemList;
 
     /**
      * Constructeur de la classe Room
@@ -24,14 +24,14 @@ public class Room
         this.aDescription = pRoomName;
         this.aExits = new HashMap<String, Room>();
         this.aImageName = pImageName;
-        this.aItem = new HashMap<String, Item>();
+        this.aItemList = new ItemList();
     }
     
     /**
      * remove an item from the room
     */
     public void removeItem(final String pItemName) {
-        this.aItem.remove(pItemName);
+        this.aItemList.removeItem(pItemName);
     }
 
     /**
@@ -86,15 +86,15 @@ public class Room
 
     
     public void addItem(final String pItemName, final Item pItem) {
-        this.aItem.put(pItemName, pItem);
+        this.aItemList.addItem(pItem);
     }
 
-    public void addNewItem(final String pItemName, final String pDesc, final int pWorth) {
-        this.aItem.put(pItemName, new Item(pItemName, pDesc , pWorth));
+    public void addNewItem(final String pItemName, final String pDesc, final int pWorth, final int pWeight) {
+        this.aItemList.addItem(new Item(pItemName, pDesc , pWorth, pWeight));
     }
 
     public boolean hasItem(final String pItemName) {
-        if (this.aItem.containsKey(pItemName)) {
+        if (this.aItemList.hasItem(pItemName)) {
             return true;
         } else {
             return false;
@@ -102,16 +102,10 @@ public class Room
     }
     
     public Item getItem(final String pItemName) {
-        return this.aItem.get(pItemName);
+        return this.aItemList.getItem(pItemName);
     }
 
     public String getItemsString() {
-        String items = "Items: ";
-        Set<String> keys = this.aItem.keySet();
-
-        for(String itemKey : keys) {
-            items += itemKey + " ";
-        }
-        return items;
+        return this.aItemList.getItemString();
     }
 } // Room
