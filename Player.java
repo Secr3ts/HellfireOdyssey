@@ -30,6 +30,14 @@ public class Player {
     // Commands
 
     /**
+     * Mange un item de l'inventaire
+     * @param pItemName
+     */
+    public void eat(final String pItemName) {
+        this.aInventory.removeItem(pItemName);
+        this.aCurrentWeight -= this.aInventory.getItem(pItemName).getWeight();
+    }
+    /**
      * Déplace le joueur dans la salle indiquée
      * @param pNextRoom
      */
@@ -137,5 +145,12 @@ public class Player {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Retourne la String de l'inventaire du joueur
+     */
+    public String getInventoryString() {
+        return this.aInventory.getItemString();
     }
 }

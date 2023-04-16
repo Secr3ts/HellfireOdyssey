@@ -141,6 +141,7 @@ public class GameEngine
         Item vEyesOfTheGorgon = new Item("Eyes of the Gorgon", "Eyes of the Gorgon, the most feared monster of hell", -3, 3);
         Item vHeadOfLucifer = new Item("Head of Lucifer", "Head of Lucifer, the most feared demon of hell", 0, 9);
 
+        Item vMagicCookie = new Item("Magic cookie", "A magic cookie that will give you double inventory capacity", 0, 0);
 
         // Add Items to rooms
         vLimbo.addItem(vLordBlessing.getName(), vLordBlessing);
@@ -151,6 +152,7 @@ public class GameEngine
         vLust.addItem(vPriestRobe.getName(), vPriestRobe);
 
         vMarrakech.addItem(vHolyWater.getName(), vHolyWater);
+        vMarrakech.addItem(vMagicCookie.getName(), vMagicCookie);
 
         vAvarice.addItem(vPurseOfCoins.getName(), vPurseOfCoins);
         vAvarice.addItem(vHolyGrail.getName(), vHolyGrail);
@@ -251,28 +253,76 @@ public class GameEngine
         }
 
         String vCommandWord = vCommand.getCommandWord();
-        if ( vCommandWord.equals( "help" ) )
-            this.printHelp();
-        else if ( vCommandWord.equals( "look" ) )
-            this.look();
-        else if ( vCommandWord.equals( "pray" ) )
-            this.pray();
-        else if ( vCommandWord.equals( "go" ) )
-            this.goRoom(vCommand);
-        else if ( vCommandWord.equals( "back" ) )
-            this.back();
-        else if ( vCommand.equals("take"))
-            this.take(vCommand);
-        else if ( vCommand.equals("drop"))
-            this.drop(vCommand);
-        else if ( vCommandWord.equals( "quit" ) ) {
-            if ( vCommand.hasSecondWord() )
-                this.aGui.println( "Quit what?" );
-            else
-                this.endGame();
-        } else {
-            this.aGui.println("Command not implemented yet");
+        vCommandWord = vCommandWord.toLowerCase();
+        switch (vCommandWord) {
+            case "help":
+                this.printHelp();
+                break;
+            case "look":
+                this.look();
+                break;
+            case "pray":
+                this.pray();
+                break;
+            case "go":
+                this.goRoom(vCommand);
+                break;
+            case "back":
+                this.back();
+                break;
+            case "take":
+                this.take(vCommand);
+                break;
+            case "drop":    
+                this.drop(vCommand);
+                break;
+            case "quit":
+                if ( vCommand.hasSecondWord() )
+                    this.aGui.println( "Quit what?" );
+                else
+                    this.endGame();
+                break;
+            case "items":
+                this.printItems();
+                break;
+            case "eat":
+                this.eat(vCommand);
+                break;
+            default:
+                this.aGui.println("Command not implemented yet");
+                break;
         }
+    }
+
+    /**
+     * Eat an item
+     * @param pCommand
+     */
+    private void eat(final Command pCommand) {
+        if (!pCommand.hasSecondWord()) {
+            this.aGui.println("Eat What ?");
+            return;
+        }
+
+        String vItemName = pCommand.getSecondWord();
+        
+        if (!this.aPlayer.hasItem(vItemName)) {
+            this.aGui.println("You don't have " + vItemName + " in your inventory.");
+            return;
+        }
+
+        Item vItem = this.aPlayer.getCurrentRoom().getItem(vItemName);
+        
+
+        this.aPlayer.eat(vItemName);
+        this.aGui.println("You eat " + vItemName + ".");
+    }
+    
+    /**
+     * Print the items in the player's inventory
+     */
+    private void printItems() {
+        this.aGui.println(this.aPlayer.getInventoryString());
     }
 
     /**
