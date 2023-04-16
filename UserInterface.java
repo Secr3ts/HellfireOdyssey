@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.net.URL;
-import java.awt.image.*;
 
 /**
  * This class implements a simple graphical user interface with a text entry
@@ -60,7 +59,10 @@ public class UserInterface implements ActionListener
         if ( vImageURL == null )
             System.out.println( "Image not found : " + vImagePath );
         else {
-            ImageIcon vIcon = new ImageIcon( vImageURL );
+            ImageIcon vIcon = new ImageIcon( vImageURL);
+            Image image = vIcon.getImage(); 
+            image = image.getScaledInstance(600,600, Image.SCALE_SMOOTH);
+            vIcon = new ImageIcon(image);
             this.aImage.setIcon( vIcon );
             this.aMyFrame.pack();
         }
@@ -86,6 +88,22 @@ public class UserInterface implements ActionListener
         this.aMyFrame = new JFrame( "Hellfire Odyssey" ); // change the title
         this.aEntryField = new JTextField( 34 );
         this.aButton = new JButton( "Quit" );
+        this.aButton.setPreferredSize(new Dimension(100, 50));
+
+        // icons
+        if (SystemTray.isSupported()) {
+            SystemTray tray = SystemTray.getSystemTray();
+            Image image = Toolkit.getDefaultToolkit().getImage("Images/favicon.jpeg");
+            TrayIcon trayIcon = new TrayIcon(image, "Hellfire Odyssey");
+            trayIcon.setImageAutoSize(true);
+            try {
+                tray.add(trayIcon);
+            } catch (AWTException e) {
+                System.err.println(e);
+            }
+        }
+
+        this.aMyFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("Images/favicon.jpeg"));
 
         this.aLog = new JTextArea();
         this.aLog.setEditable( false );

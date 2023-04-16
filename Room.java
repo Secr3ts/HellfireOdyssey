@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -13,19 +14,26 @@ public class Room
     private String aDescription;
     private HashMap<String, Room> aExits;
     private String aImageName;
-    private Item aItem;
+    private HashMap<String, Item> aItem;
 
     /**
      * Constructeur de la classe Room
      * @param pRoomName
      */
-    public Room(final String pRoomName) {
+    public Room(final String pRoomName, final String pImageName) {
         this.aDescription = pRoomName;
         this.aExits = new HashMap<String, Room>();
-        this.aImageName = null;
-        this.aItem = null;
+        this.aImageName = pImageName;
+        this.aItem = new HashMap<String, Item>();
     }
     
+    /**
+     * remove an item from the room
+    */
+    public void removeItem(final String pItemName) {
+        this.aItem.remove(pItemName);
+    }
+
     /**
      * Retourne la description de la salle
      * @return String
@@ -76,7 +84,34 @@ public class Room
         return this.aImageName;
     }
 
-    public void setItem(final String pItemName, final int pWorth) {
-        this.aItem = new Item(pItemName, pWorth);
+    
+    public void addItem(final String pItemName, final Item pItem) {
+        this.aItem.put(pItemName, pItem);
+    }
+
+    public void addNewItem(final String pItemName, final String pDesc, final int pWorth) {
+        this.aItem.put(pItemName, new Item(pItemName, pDesc , pWorth));
+    }
+
+    public boolean hasItem(final String pItemName) {
+        if (this.aItem.containsKey(pItemName)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public Item getItem(final String pItemName) {
+        return this.aItem.get(pItemName);
+    }
+
+    public String getItemsString() {
+        String items = "Items: ";
+        Set<String> keys = this.aItem.keySet();
+
+        for(String itemKey : keys) {
+            items += itemKey + " ";
+        }
+        return items;
     }
 } // Room
