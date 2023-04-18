@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 /**
  * Classe GameEngine - le moteur du jeu d'aventure Zuul.
  *
@@ -36,14 +40,14 @@ public class GameEngine
         Room vAvarice = new Room("Fourth Circle of Hell, Residence of all the Avaricious", "Images/avarice.jpeg");
         Room vWrath = new Room("Fifth Circle of Hell, Residence of all the Wrathful", "Images/wrath.jpeg");
         Room vHeresy = new Room("Sixth Circle of Hell, Residence of all the Heretics", "Images/heresy.jpeg");
-        Room vViolence = new Room("Seventh Circle of Hell, Residence of all the Violent", "Images/violence.jpeg");
+        Room vViolence = new Room("Seventh Circle of Hell, Residence of all the Violent", "Images/violence.png");
         Room vFraud = new Room("Eighth Circle of Hell, Jail of all the Fraudulent", "Images/fraud.jpeg");
         Room vTreachery = new Room("Ninth Circle of Hell, Residence of all the Treacherous", "Images/treachery.jpeg");
         Room vParadise = new Room("Paradise, your final destination for salvation", "Images/paradise.jpeg");
         Room vHell = new Room("Hell, the place where you will be condemned for eternity", "Images/game_over2.jpeg");
         // Create additional rooms
         
-        Room vCharonsFerry = new Room("Charon\'s Ferry", "Images/charon_s_ferry.jpeg");
+        Room vCharonsFerry = new Room("Charon\'s Ferry", "Images/charron_s_ferry.jpeg");
         Room vLimboCitadel = new Room("Limbo Citadel, the Residence of the Virtuous Pagans", "Images/limbo_citadel.jpeg");
 
         Room vMarrakech = new Room("Marrakech, the City of the Lustful", "Images/marrakech.jpeg");
@@ -288,6 +292,8 @@ public class GameEngine
             case "eat":
                 this.eat(vCommand);
                 break;
+            case "test":
+                this.test(vCommand);
             default:
                 this.aGui.println("Command not implemented yet");
                 break;
@@ -311,7 +317,7 @@ public class GameEngine
             return;
         }
 
-        Item vItem = this.aPlayer.getCurrentRoom().getItem(vItemName);
+        //Item vItem = this.aPlayer.getCurrentRoom().getItem(vItemName);
         
 
         this.aPlayer.eat(vItemName);
@@ -398,22 +404,21 @@ public class GameEngine
         this.aGui.enable( false );
     }
 
-    /*
-    private void test(String pFile) 
-        throws IOException {
-            if (pFile == null) {
-                throw new IllegalArgumentException("File name cannot be null");
-            } else if (pFile.contains(".txt")) {
-                pFile = pFile.substring(0, pFile.length() - 4);
-            }
-
-            Path path = Paths.get("./" + pFile + ".txt");
-        
-            List<String> read = Files.readAllLines(path);
-            
-            for (String line : read) {
-                this.interpretCommand(line);
-            }
+    private void test(final Command pCommand) {
+        if (!pCommand.hasSecondWord()){ // Verification de la présence d'un second mot
+            this.aGui.println("What do you want to test ?");
+            return;
         }
-    */
+
+        String vFileToScan = pCommand.getSecondWord();
+        try {
+            Scanner vScanner = new Scanner(new File(""+ vFileToScan + ".txt"));
+            this.aGui.println("Testing " + vFileToScan);
+            while (vScanner.hasNextLine()) {
+                this.interpretCommand(vScanner.nextLine());
+            }
+        } catch (final FileNotFoundException pErr) {
+            this.aGui.println("Error, FNF " + pErr.toString());
+        }
+    }
 } // Game

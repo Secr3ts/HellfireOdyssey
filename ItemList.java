@@ -20,6 +20,9 @@ public class ItemList {
      * @param pItem
      */
     public void addItem(final Item pItem) {
+        if (pItem == null) {
+            return;
+        }
         this.aItemList.put(pItem.getName(), pItem);
     }
 

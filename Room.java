@@ -80,6 +80,7 @@ public class Room
         return "You are " + this.aDescription + ".\n" + this.getExitString();
     }
 
+    
     public String getImageName() {
         return this.aImageName;
     }

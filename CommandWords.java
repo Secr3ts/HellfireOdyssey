@@ -1,6 +1,4 @@
- 
-
-/**
+ /**
  * This class is part of the "World of Zuul" application. 
  * "World of Zuul" is a very simple, text based adventure game.  
  * 
@@ -20,12 +18,17 @@ public class CommandWords
      */
     public CommandWords()
     {
-        this.aValidCommands = new String[5];
-        this.aValidCommands[0] = "go";
-        this.aValidCommands[1] = "help";
-        this.aValidCommands[2] = "quit";
-        this.aValidCommands[3] = "look";
-        this.aValidCommands[4] = "pray";
+        this.aValidCommands = new String[]{
+            "go",
+            "help",
+            "quit",
+            "look",
+            "pray",
+            "back",
+            "take",
+            "drop",
+            "test"
+        };
     } // CommandWords()
     /**
      * Check whether a given String is a valid direction word.
