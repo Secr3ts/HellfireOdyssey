@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -18,7 +17,8 @@ public class Room
 
     /**
      * Constructeur de la classe Room
-     * @param pRoomName
+     * @param pRoomName Nom de la salle
+     * @param pImageName Nom de l'image de la salle
      */
     public Room(final String pRoomName, final String pImageName) {
         this.aDescription = pRoomName;
@@ -29,6 +29,7 @@ public class Room
     
     /**
      * remove an item from the room
+     * @param pItemName name of the item to remove  
     */
     public void removeItem(final String pItemName) {
         this.aItemList.removeItem(pItemName);
@@ -36,7 +37,7 @@ public class Room
 
     /**
      * Retourne la description de la salle
-     * @return String
+     * @return String description de la salle
      */
     public String getDescription() {
         return this.aDescription;
@@ -44,23 +45,23 @@ public class Room
     
     /**
      * Définit les sorties de la salle dans la direction indiquée
-     * @param pDirection
-     * @param pRoom
+     * @param pDirection direction de la sortie
+     * @param pRoom salle de la sortie
      */
     public void setExit(final String pDirection, final Room pRoom) {
         this.aExits.put(pDirection, pRoom);
     }
     /**
      * Retourne la salle dans la direction indiquée
-     * @param pDirection
-     * @return Room
+     * @param pDirection direction de la sortie
+     * @return Room salle de la sortie
      */
     public Room getExit(final String pDirection) {
         return this.aExits.get(pDirection);
     }
     /**
      * Retourne les sorties d'une salle en une String
-     * @return String
+     * @return String sorties de la salle
      */
     public String getExitString() {
         
@@ -80,20 +81,39 @@ public class Room
         return "You are " + this.aDescription + ".\n" + this.getExitString();
     }
 
-    
+    /**
+     * Retourne le nom de l'image de la salle
+     * @return String nom de l'image de la salle
+     */    
     public String getImageName() {
         return this.aImageName;
     }
 
-    
+    /**
+     * Ajoute un item à la salle
+     * @param pItemName nom de l'item à ajouter
+     * @param pItem item à ajouter
+     */
     public void addItem(final String pItemName, final Item pItem) {
         this.aItemList.addItem(pItem);
     }
 
+    /**
+     * Ajoute un item à la salle
+     * @param pItemName nom de l'item à ajouter
+     * @param pDesc description de l'item
+     * @param pWorth valeur de l'item
+     * @param pWeight poids de l'item
+     */
     public void addNewItem(final String pItemName, final String pDesc, final int pWorth, final int pWeight) {
         this.aItemList.addItem(new Item(pItemName, pDesc , pWorth, pWeight));
     }
 
+    /**
+     * Vérifie si un item est dans la salle
+     * @param pItemName nom de l'item à vérifier
+     * @return true si l'item est dans la salle
+     */
     public boolean hasItem(final String pItemName) {
         if (this.aItemList.hasItem(pItemName)) {
             return true;
@@ -102,10 +122,19 @@ public class Room
         }
     }
     
+    /**
+     * Retourne un item de la salle
+     * @param pItemName nom de l'item à retourner
+     * @return Item item à retourner
+     */
     public Item getItem(final String pItemName) {
         return this.aItemList.getItem(pItemName);
     }
 
+    /**
+     * Retourne les items de la salle en une String
+     * @return String items de la salle
+     */
     public String getItemsString() {
         return this.aItemList.getItemString();
     }

@@ -9,6 +9,10 @@ public class Item {
 
     /**
      * Constructor for objects of class Item
+     * @param pName the name of the item
+     * @param pDescription the description of the item
+     * @param pWorth the worth of the item
+     * @param pWeight the weight of the item
      */
     public Item(final String pName, final String pDescription, final int pWorth, final int pWeight) {
         this.aName = pName;

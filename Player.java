@@ -15,8 +15,8 @@ public class Player {
 
     /**
      * Constructeur de la classe Player
-     * @param pName
-     * @param pCurrentRoom
+     * @param pName nom du joueur
+     * @param pCurrentRoom salle actuelle du joueur
      */
     public Player(final String pName, final Room pCurrentRoom) {
         this.aCurrentRoom = pCurrentRoom;
@@ -31,7 +31,7 @@ public class Player {
 
     /**
      * Mange un item de l'inventaire
-     * @param pItemName
+     * @param pItemName nom de l'item à manger
      */
     public void eat(final String pItemName) {
         this.aInventory.removeItem(pItemName);
@@ -39,7 +39,7 @@ public class Player {
     }
     /**
      * Déplace le joueur dans la salle indiquée
-     * @param pNextRoom
+     * @param pNextRoom nom de la salle suivante
      */
     public void goRoom(final String pNextRoom) {
         this.aPreviousRooms.push(this.aCurrentRoom);
@@ -56,7 +56,7 @@ public class Player {
 
     /**
      * Ajoute un item à l'inventaire du joueur
-     * @param pItemName
+     * @param pItemName nom de l'item à take
      */
     public void take(final String pItemName) {
         this.aInventory.addItem(this.aCurrentRoom.getItem(pItemName));
@@ -66,7 +66,7 @@ public class Player {
 
     /**
      * Retire un item de l'inventaire du joueur
-     * @param pItemName
+     * @param pItemName nom de l'item à drop
      */
     public void drop(final String pItemName) {
         this.aCurrentRoom.addItem(this.aInventory.getItem(pItemName).getName(), this.aInventory.getItem(pItemName));;
@@ -77,7 +77,7 @@ public class Player {
     // Getters
     /**
      * Retourne le nom du joueur
-     * @return
+     * @return String nom du joueur
      */
     public String getName() {
         return this.aName;
@@ -85,7 +85,7 @@ public class Player {
 
     /**
      * Retourne la salle actuelle du joueur
-     * @return
+     * @return Room salle actuelle du joueur
      */
     public Room getCurrentRoom() {
         return this.aCurrentRoom;
@@ -93,7 +93,7 @@ public class Player {
 
     /**
      * Retourne la pile des salles précédentes
-     * @return
+     * @return pile des salles précédentes
      */
     public Stack<Room> getPreviousRooms() {
         return this.aPreviousRooms;
@@ -101,7 +101,7 @@ public class Player {
     
     /**
      * Retourne l'inventaire du joueur
-     * @return
+     * @return ItemList inventaire du joueur
      */
     public ItemList getInventory() {
         return this.aInventory;
@@ -109,8 +109,8 @@ public class Player {
 
     /**
      * Retourne true si l'item est dans l'inventaire du joueur
-     * @param pItemName
-     * @return
+     * @param pItemName nom de l'item
+     * @return boolean true si l'item est dans l'inventaire du joueur
      */
     public boolean hasItem(final String pItemName) {
         if (this.aInventory.getItem(pItemName).getName().equals(pItemName)) {
@@ -122,6 +122,7 @@ public class Player {
 
     /**
      * Retourne le poids maximal que le joueur peut porter
+     * @return int poids maximal que le joueur peut porter
      */
     public int getMaxWeight() {
         return this.aMaxWeight;
@@ -129,6 +130,7 @@ public class Player {
 
     /**
      * Retourne le poids actuel de l'inventaire du joueur
+     * @return int poids actuel de l'inventaire du joueur
      */
     public int getCurrentWeight() {
         return this.getCurrentWeight();
@@ -137,7 +139,7 @@ public class Player {
     /**
      * Retourne true si le joueur peut porter l'item
      * @param pItemWeight
-     * @return
+     * @return boolean true si le joueur peut porter l'item
      */
     public boolean canCarry(final int pItemWeight) {
         if (this.getCurrentWeight() + pItemWeight <= this.aMaxWeight) {
@@ -149,6 +151,7 @@ public class Player {
 
     /**
      * Retourne la String de l'inventaire du joueur
+     * @return String de l'inventaire du joueur
      */
     public String getInventoryString() {
         return this.aInventory.getItemString();

@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 /**
  * Classe GameEngine - le moteur du jeu d'aventure Zuul.
- *
  * @author Aloïs Fournier
  */
 public class GameEngine
@@ -189,7 +188,7 @@ public class GameEngine
     
     /**
      * Change de salle
-     * @param pRoom La nouvelle salle
+     * @param pCommand Commande de changement de salle
      */
     private void goRoom(final Command pCommand) {
         if (!pCommand.hasSecondWord()) {
@@ -243,8 +242,7 @@ public class GameEngine
 
     /**
      * Given a command, process (that is: execute) the command.
-     * If this command ends the game, true is returned, otherwise false is
-     * returned.
+     * @param pCommandLine The command to be processed.
      */
     public void interpretCommand( final String pCommandLine ) 
     {
@@ -387,13 +385,12 @@ public class GameEngine
     }
 
     private void back() {
-        this.aGui.println("You go back to the previous room.");
-        
         if (this.aPlayer.getPreviousRooms().empty()) {
             this.aGui.println("You can't go back.");
             return;
         }
-
+        
+        this.aGui.println("You go back to the previous room.");
         this.aPlayer.back();
         this.printLocationInfo();
     }

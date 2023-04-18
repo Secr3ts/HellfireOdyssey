@@ -37,7 +37,7 @@ public class ItemList {
 
     /**
      * Retire un item de la liste
-     * @param pItemName
+     * @param pItemName nom de l'item à retirer
      */
     public void removeItem(final String pItemName) {
         if (this.aItemList.containsKey(pItemName)) {
@@ -48,7 +48,7 @@ public class ItemList {
     /**
      * Vérifie si un item est dans la liste
      * @param pItemName
-     * @return
+     * @return true si l'item est dans la liste
      */
     public boolean hasItem(final String pItemName) {
         if (this.aItemList.containsKey(pItemName)) {
@@ -60,7 +60,7 @@ public class ItemList {
 
     /**
      * Retourne la liste des items en String
-     * @return String
+     * @return String liste des items
      */
     public String getItemString() {
         String items = "Items: ";

@@ -5,8 +5,8 @@
  * This class holds an enumeration table of all command words known to the game.
  * It is used to recognise commands as they are typed in.
  *
- * @author  Michael Kolling and David J. Barnes + D.Bureau
- * @version 2008.03.30 + 2019.09.25
+ * @author  Michael Kolling and David J. Barnes + D.Bureau + A.Fournier
+ * @version 2008.03.30 + 2019.09.25 + 2023.04.18
  */
 public class CommandWords
 {
@@ -58,10 +58,20 @@ public class CommandWords
         return false;
     } // isCommand()
 
+    /**
+     * @return a string of all valid commands
+     */
     public String[] getCommands() {
         return this.aValidCommands;
     }
+    /**
+     * @return a string of all valid commands
+     */
     public String getCommandList() {
-        return null;
+        String vReturn = "";
+        for (int vI = 0; vI < this.aValidCommands.length; vI++) {
+            vReturn += this.aValidCommands[vI] + " ";
+        }
+        return vReturn;
     }
 } // CommandWords
