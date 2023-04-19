@@ -23,11 +23,15 @@ public class UserInterface implements ActionListener {
     private JButton aSouthButton;
     private JButton aEastButton;
     private JButton aWestButton;
+    private JButton aDownButton;
 
     private JButton aTakeButton;
     private JButton aDropButton;
     private JButton aPrayButton;
     private JButton aLookButton;
+    private JButton aBackButton;
+    private JButton aUpButton;
+
 
     /**
      * Construct a UserInterface. As a parameter, a Game Engine
@@ -126,9 +130,9 @@ public class UserInterface implements ActionListener {
         this.aEastPanel = new JPanel();
         this.aWestPanel = new JPanel();
 
-        // set grid layout, 4x1 for both
-        this.aEastPanel.setLayout(new GridLayout(4, 1));
-        this.aWestPanel.setLayout(new GridLayout(4, 1));
+        // set grid layout, 5x1 for both
+        this.aEastPanel.setLayout(new GridLayout(5, 1));
+        this.aWestPanel.setLayout(new GridLayout(5, 1));
 
         // initialize buttons and applies them to their respective panels. East will be
         // for direction, west for actions. (temp)
@@ -189,6 +193,27 @@ public class UserInterface implements ActionListener {
         this.aWestPanel.add(this.aPrayButton);
         this.aPrayButton.setForeground(Color.white);
 
+        // Up Action
+        this.aUpButton = new JButton("Up", null);
+        this.aUpButton.addActionListener(this);
+        this.aUpButton.setBackground(Color.ORANGE);
+        this.aWestPanel.add(this.aUpButton);
+        this.aUpButton.setForeground(Color.white);
+
+        // Down Action
+        this.aDownButton = new JButton("Down", null);
+        this.aDownButton.addActionListener(this);
+        this.aDownButton.setBackground(Color.BLACK);
+        this.aEastPanel.add(this.aDownButton);
+        this.aDownButton.setForeground(Color.white);
+
+        // Back Action
+        this.aBackButton = new JButton("Back", null);
+        this.aBackButton.addActionListener(this);
+        this.aBackButton.setBackground(Color.ORANGE);
+        //this.aWestPanel.add(this.aBackButton);
+        this.aBackButton.setForeground(Color.white);
+
         vPanel.add(this.aWestPanel, BorderLayout.WEST);
         vPanel.add(this.aEastPanel, BorderLayout.EAST);
         // add some event listeners to some components
@@ -228,6 +253,12 @@ public class UserInterface implements ActionListener {
             this.aEngine.interpretCommand("");
         else if (pE.getSource() == this.aPrayButton)
             this.aEngine.interpretCommand("pray");
+        else if (pE.getSource() == this.aUpButton)
+            this.aEngine.interpretCommand("go up");
+        else if (pE.getSource() == this.aDownButton)
+            this.aEngine.interpretCommand("go down");
+        else if (pE.getSource() == this.aBackButton)
+            this.aEngine.interpretCommand("back");
         else
             System.out.println("Unexpected action event source.");
     } // actionPerformed(.)
