@@ -156,4 +156,17 @@ public class Player {
     public String getInventoryString() {
         return this.aInventory.getItemString();
     }
+
+    // Setters
+    /**
+     * Définit la salle actuelle du joueur
+     * @param pCurrentRoom salle actuelle du joueur
+     */
+    public void setCurrentRoom(final Room pCurrentRoom) {
+        this.aCurrentRoom = pCurrentRoom;
+    }
+
+    public void setMaxWeight(final int pMaxWeight) {
+        this.aMaxWeight = pMaxWeight;
+    }
 }

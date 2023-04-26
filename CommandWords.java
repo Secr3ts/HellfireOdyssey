@@ -27,7 +27,8 @@ public class CommandWords
             "back",
             "take",
             "drop",
-            "test"
+            "test",
+            "respawn"
         };
     } // CommandWords()
     /**

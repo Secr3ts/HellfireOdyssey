@@ -12,6 +12,7 @@ public class GameEngine {
     private UserInterface aGui;
     private Player aPlayer;
     private Room[] aRooms;
+    private Room spawnRoom;
 
     /**
      * Crée le jeu et initialise les salles.
@@ -44,7 +45,7 @@ public class GameEngine {
         Room vFraud = new Room("Fraud, Eighth Circle of Hell, Jail of all the Fraudulent", "Images/fraud.jpeg");
         Room vTreachery = new Room("Treachery, Ninth Circle of Hell, Residence of all the Treacherous", "Images/treachery.jpeg");
         Room vParadise = new Room("Paradise, your final destination for salvation", "Images/paradise.jpeg");
-        Room vHell = new Room("Hell, the place where you will be condemned for eternity", "Images/game_over2.jpeg");
+        Room vHell = new Room("Hell, the place where you will be condemned for eternity", "Images/game_over_2.jpeg");
         // Create additional rooms
 
         Room vCharonsFerry = new Room("Charon\'s Ferry", "Images/charron_s_ferry.jpeg");
@@ -61,10 +62,10 @@ public class GameEngine {
 
         Room vCityOfDis = new Room("The City of Dis, Jail of all heretics and pagans", "Images/city_of_dis.jpeg");
 
-        Room vPhlegethon = new Room("Phlegethon, blood river", "Images/phlegethon.jpeg");
+        Room vPhlegethon = new Room("Phlegethon, blood river", "Images/lake_phlegethon.jpeg");
         Room vBurningSands = new Room("The Burning Sands, cursed home of the blasphemers", "Images/burning_sands.jpeg");
 
-        Room vMalebolge = new Room("The City of Malebolge, residence of the bolges", "Images/malebolge.jpeg");
+        Room vMalebolge = new Room("The City of Malebolge, residence of the bolges", "Images/malebolge_city.jpeg");
 
         Room vLakeCocytus = new Room("The Lake of Cocytus, frozen lake that imprisons Lucifer",
                 "Images/lake_cocytus.jpeg");
@@ -130,8 +131,8 @@ public class GameEngine {
         vTreachery.setExit("south", vLakeCocytus);
 
         vLakeCocytus.setExit("north", vTreachery);
-        vLakeCocytus.setExit("east", vParadise);
-        vLakeCocytus.setExit("west", vHell);
+        vLakeCocytus.setExit("up", vParadise);
+        vLakeCocytus.setExit("down", vHell);
 
         vHell.setExit("south", vLimbo);
 
@@ -154,7 +155,7 @@ public class GameEngine {
                 -3, 3);
         Item vHeadOfLucifer = new Item("Head of Lucifer", "Head of Lucifer, the most feared demon of hell", 0, 9);
 
-        Item vMagicCookie = new Item("Magic cookie", "A magic cookie that will give you double inventory capacity", 0,
+        Item vMagicCookie = new Item("magiccookie", "A magic cookie that will give you double inventory capacity", 0,
                 0);
 
         // Add Items to rooms
@@ -194,6 +195,8 @@ public class GameEngine {
         // Initial Room
         this.aPlayer = new Player("Gr4ve", vLimbo);
 
+        // Spawn room
+        this.spawnRoom = vLimbo;
     }
 
     /**
@@ -281,7 +284,7 @@ public class GameEngine {
                 this.goRoom(vCommand);
                 break;
             case "back":
-                this.back();
+                this.back(vCommand);
                 break;
             case "take":
                 this.take(vCommand);
@@ -303,6 +306,10 @@ public class GameEngine {
                 break;
             case "test":
                 this.test(vCommand);
+                break;
+            case "respawn":
+                this.respawn();
+                break;
             default:
                 this.aGui.println("Command not implemented yet");
                 break;
@@ -311,6 +318,18 @@ public class GameEngine {
         this.runMechanics();
     }
 
+    /**
+     * Respawn the player
+     */
+    public void respawn() {
+        this.aPlayer.setCurrentRoom(this.spawnRoom);
+        this.printLocationInfo();
+        this.aGui.println("You respawned");
+    }
+
+    /**
+     * Mechanics of the game
+     */
     private void runMechanics() {
         
     }
@@ -336,6 +355,10 @@ public class GameEngine {
         // Item vItem = this.aPlayer.getCurrentRoom().getItem(vItemName);
 
         this.aPlayer.eat(vItemName);
+        if (vItemName.equals("magiccookie")) {
+            this.aGui.println("You feel a strange power in you.");
+            this.aPlayer.setMaxWeight(this.aPlayer.getMaxWeight() * 2);
+        }
         this.aGui.println("You eat " + vItemName + ".");
     }
 
@@ -402,9 +425,19 @@ public class GameEngine {
         // Taint soul (?)
     }
 
-    private void back() {
+    private void back(final Command pCommand) {
+        if (pCommand.hasSecondWord()) {
+            this.aGui.println("Back what ?");
+            return;
+        }
+
         if (this.aPlayer.getPreviousRooms().empty()) {
             this.aGui.println("You can't go back.");
+            return;
+        }
+
+        if (!this.aPlayer.getPreviousRooms().peek().isExit()) {
+            this.aGui.println("You can't go back. It\'s a trap !");
             return;
         }
 

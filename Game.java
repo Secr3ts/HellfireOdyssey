@@ -26,4 +26,12 @@
          this.aGui = new UserInterface( this.aEngine );
          this.aEngine.setGUI( this.aGui );
      } // Game()
+
+    /**
+    *  Main play routine.  Loops until end of play.
+    */
+    public static void main(String[] args) {
+        new Game();
+    }
+
 }

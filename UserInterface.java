@@ -32,7 +32,6 @@ public class UserInterface implements ActionListener {
     private JButton aBackButton;
     private JButton aUpButton;
 
-
     /**
      * Construct a UserInterface. As a parameter, a Game Engine
      * (an object processing and executing the game commands) is
@@ -66,17 +65,22 @@ public class UserInterface implements ActionListener {
     public void showImage(final String pImageName) {
         String vImagePath = "" + pImageName; // to change the directory
         URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
-        if (vImageURL == null)
+        if (vImageURL == null) {
             System.out.println("Image not found : " + vImagePath);
-        else {
-            ImageIcon vIcon = new ImageIcon(vImageURL);
-            Image image = vIcon.getImage();
-            image = image.getScaledInstance(600, 600, Image.SCALE_SMOOTH);
-            vIcon = new ImageIcon(image);
-            this.aImage.setIcon(vIcon);
-            this.aMyFrame.pack();
+            displayImage(this.getClass().getClassLoader().getResource("Images/chaise_2.png"));
+        } else {
+            displayImage(vImageURL);
         }
     } // showImage(.)
+
+    private void displayImage(URL vImageURL) {
+        ImageIcon vIcon = new ImageIcon(vImageURL);
+        Image image = vIcon.getImage();
+        image = image.getScaledInstance(600, 600, Image.SCALE_SMOOTH);
+        vIcon = new ImageIcon(image);
+        this.aImage.setIcon(vIcon);
+        this.aMyFrame.pack();
+    }
 
     /**
      * Enable or disable input in the input field.
@@ -180,7 +184,7 @@ public class UserInterface implements ActionListener {
         this.aTakeButton.setForeground(Color.white);
 
         // Drop Action
-        this.aDropButton = new JButton("null", null);
+        this.aDropButton = new JButton("Respawn", null);
         this.aDropButton.addActionListener(this);
         this.aDropButton.setBackground(Color.ORANGE);
         this.aWestPanel.add(this.aDropButton);
@@ -211,7 +215,7 @@ public class UserInterface implements ActionListener {
         this.aBackButton = new JButton("Back", null);
         this.aBackButton.addActionListener(this);
         this.aBackButton.setBackground(Color.ORANGE);
-        //this.aWestPanel.add(this.aBackButton);
+        // this.aWestPanel.add(this.aBackButton);
         this.aBackButton.setForeground(Color.white);
 
         vPanel.add(this.aWestPanel, BorderLayout.WEST);
@@ -250,7 +254,7 @@ public class UserInterface implements ActionListener {
         else if (pE.getSource() == this.aTakeButton)
             this.aEngine.interpretCommand("back");
         else if (pE.getSource() == this.aDropButton)
-            this.aEngine.interpretCommand("");
+            this.aEngine.interpretCommand("respawn");
         else if (pE.getSource() == this.aPrayButton)
             this.aEngine.interpretCommand("pray");
         else if (pE.getSource() == this.aUpButton)
