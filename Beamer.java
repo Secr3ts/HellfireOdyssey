@@ -45,6 +45,14 @@ public class Beamer extends Item {
     }
 
     /**
+     * Uncharges the Beamer
+     */
+    public void uncharge() {
+        this.aSavedRoom = null;
+        this.aIsCharged = false;
+    }
+
+    /**
      * Fires the Beamer
      * 
      * @param pPlayer the player that will be used to push the room to the stack /

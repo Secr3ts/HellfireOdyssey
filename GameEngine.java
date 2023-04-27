@@ -1,5 +1,5 @@
 import java.io.File;
-import java.io.FileNotFoundException;   
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
@@ -37,13 +37,17 @@ public class GameEngine {
 
         Room vLimbo = new Room("Limbo, the First Circle of Hell, Residence of all Pagans", "Images/limbo.jpeg");
         Room vLust = new Room("Lust, Second Circle of Hell, Residence of all the Lustful", "Images/lust.jpeg");
-        Room vGluttony = new Room("Gluttony, Third Circle of Hell, Residence of all the Gluttonous", "Images/gluttony.jpeg");
-        Room vAvarice = new Room("Avarice, Fourth Circle of Hell, Residence of all the Avaricious", "Images/avarice.jpeg");
+        Room vGluttony = new Room("Gluttony, Third Circle of Hell, Residence of all the Gluttonous",
+                "Images/gluttony.jpeg");
+        Room vAvarice = new Room("Avarice, Fourth Circle of Hell, Residence of all the Avaricious",
+                "Images/avarice.jpeg");
         Room vWrath = new Room("Wrath, Fifth Circle of Hell, Residence of all the Wrathful", "Images/wrath.jpeg");
         Room vHeresy = new Room("Heresy, Sixth Circle of Hell, Residence of all the Heretics", "Images/heresy.jpeg");
-        Room vViolence = new Room("Violence, Seventh Circle of Hell, Residence of all the Violent", "Images/violence.png");
+        Room vViolence = new Room("Violence, Seventh Circle of Hell, Residence of all the Violent",
+                "Images/violence.png");
         Room vFraud = new Room("Fraud, Eighth Circle of Hell, Jail of all the Fraudulent", "Images/fraud.jpeg");
-        Room vTreachery = new Room("Treachery, Ninth Circle of Hell, Residence of all the Treacherous", "Images/treachery.jpeg");
+        Room vTreachery = new Room("Treachery, Ninth Circle of Hell, Residence of all the Treacherous",
+                "Images/treachery.jpeg");
         Room vParadise = new Room("Paradise, your final destination for salvation", "Images/paradise.jpeg");
         Room vHell = new Room("Hell, the place where you will be condemned for eternity", "Images/game_over_2.jpeg");
         // Create additional rooms
@@ -326,6 +330,7 @@ public class GameEngine {
 
     /**
      * Charge the beamer
+     * 
      * @param pCommand
      */
     public void charge(final Command pCommand) {
@@ -333,13 +338,62 @@ public class GameEngine {
             this.aGui.println("Charge what ?");
             return;
         }
-        
+
         String vItemName = pCommand.getSecondWord();
-        
+
         if (!this.aPlayer.hasItem(vItemName)) {
             this.aGui.println("You don't have " + vItemName + " in your inventory.");
             return;
         }
+
+        if (!(this.aPlayer.getItem(vItemName) instanceof Beamer)) {
+            this.aGui.println("You can't charge " + vItemName + " !");
+            return;
+        }
+
+        Beamer vBeamer = (Beamer) this.aPlayer.getItem(vItemName);
+        if (vBeamer.isCharged()) {
+            this.aGui.println("The beamer is already charged !");
+            return;
+        }
+
+        this.aPlayer.charge(this.aPlayer.getCurrentRoom(), vBeamer);
+        this.aGui.println("The beamer is charged !");
+        // TODO: DISABLE CHARGE AND ENABLE FIRE BUTTON?
+
+    }
+
+    /**
+     * Fire the beamer
+     * 
+     * @param pCommand
+     */
+    public void fire(final Command pCommand) {
+        if (!pCommand.hasSecondWord()) {
+            this.aGui.println("Fire what ?");
+            return;
+        }
+
+        String vItemName = pCommand.getSecondWord();
+
+        if (!this.aPlayer.hasItem(vItemName)) {
+            this.aGui.println("You don't have " + vItemName + " in your inventory.");
+            return;
+        }
+
+        if (!(this.aPlayer.getItem(vItemName) instanceof Beamer)) {
+            this.aGui.println("You can't fire " + vItemName + " !");
+            return;
+        }
+
+        Beamer vBeamer = (Beamer) this.aPlayer.getItem(vItemName);
+        if (!vBeamer.isCharged()) {
+            this.aGui.println("The beamer is not charged !");
+            return;
+        }
+
+        this.aPlayer.fire(vBeamer);
+        this.aGui.println("The beamer is fired !");
     }
 
     /**
@@ -355,7 +409,7 @@ public class GameEngine {
      * Mechanics of the game
      */
     private void runMechanics() {
-        
+
     }
 
     /**

@@ -134,6 +134,26 @@ public class Player {
     }
 
     /**
+     * Charge the beamer
+     * 
+     * @param Room room to charge
+     */
+    public void charge(final Room pRoom, final Beamer pBeamer) {
+        pBeamer.charge(pRoom);
+    }
+
+    /**
+     * Fire the beamer
+     * 
+     * @param Beamer beamer to fire
+     */
+    public void fire(Beamer vBeamer) {
+        this.aPreviousRooms.push(this.aCurrentRoom);
+        this.aCurrentRoom = vBeamer.getSavedRoom();
+        vBeamer.uncharge();
+    }
+
+    /**
      * Retourne le poids maximal que le joueur peut porter
      * 
      * @return int poids maximal que le joueur peut porter
