@@ -310,12 +310,36 @@ public class GameEngine {
             case "respawn":
                 this.respawn();
                 break;
+            case "charge":
+                this.charge(vCommand);
+                break;
+            case "fire":
+                this.fire(vCommand);
+                break;
             default:
                 this.aGui.println("Command not implemented yet");
                 break;
         }
 
         this.runMechanics();
+    }
+
+    /**
+     * Charge the beamer
+     * @param pCommand
+     */
+    public void charge(final Command pCommand) {
+        if (!pCommand.hasSecondWord()) {
+            this.aGui.println("Charge what ?");
+            return;
+        }
+        
+        String vItemName = pCommand.getSecondWord();
+        
+        if (!this.aPlayer.hasItem(vItemName)) {
+            this.aGui.println("You don't have " + vItemName + " in your inventory.");
+            return;
+        }
     }
 
     /**

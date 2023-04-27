@@ -3,6 +3,7 @@ import java.util.Stack;
 
 /**
  * Classe Player - un joueur du jeu d'aventure Zuul.
+ * 
  * @author Aloïs Fournier
  */
 public class Player {
@@ -15,7 +16,8 @@ public class Player {
 
     /**
      * Constructeur de la classe Player
-     * @param pName nom du joueur
+     * 
+     * @param pName        nom du joueur
      * @param pCurrentRoom salle actuelle du joueur
      */
     public Player(final String pName, final Room pCurrentRoom) {
@@ -31,14 +33,17 @@ public class Player {
 
     /**
      * Mange un item de l'inventaire
+     * 
      * @param pItemName nom de l'item à manger
      */
     public void eat(final String pItemName) {
         this.aInventory.removeItem(pItemName);
         this.aCurrentWeight -= this.aInventory.getItem(pItemName).getWeight();
     }
+
     /**
      * Déplace le joueur dans la salle indiquée
+     * 
      * @param pNextRoom nom de la salle suivante
      */
     public void goRoom(final String pNextRoom) {
@@ -52,10 +57,11 @@ public class Player {
      */
     public void back() {
         this.aCurrentRoom = this.aPreviousRooms.pop();
-    }    
+    }
 
     /**
      * Ajoute un item à l'inventaire du joueur
+     * 
      * @param pItemName nom de l'item à take
      */
     public void take(final String pItemName) {
@@ -66,10 +72,12 @@ public class Player {
 
     /**
      * Retire un item de l'inventaire du joueur
+     * 
      * @param pItemName nom de l'item à drop
      */
     public void drop(final String pItemName) {
-        this.aCurrentRoom.addItem(this.aInventory.getItem(pItemName).getName(), this.aInventory.getItem(pItemName));;
+        this.aCurrentRoom.addItem(this.aInventory.getItem(pItemName).getName(), this.aInventory.getItem(pItemName));
+        ;
         this.aInventory.removeItem(pItemName);
         this.aCurrentWeight -= this.aInventory.getItem(pItemName).getWeight();
     }
@@ -77,6 +85,7 @@ public class Player {
     // Getters
     /**
      * Retourne le nom du joueur
+     * 
      * @return String nom du joueur
      */
     public String getName() {
@@ -85,6 +94,7 @@ public class Player {
 
     /**
      * Retourne la salle actuelle du joueur
+     * 
      * @return Room salle actuelle du joueur
      */
     public Room getCurrentRoom() {
@@ -93,14 +103,16 @@ public class Player {
 
     /**
      * Retourne la pile des salles précédentes
+     * 
      * @return pile des salles précédentes
      */
     public Stack<Room> getPreviousRooms() {
         return this.aPreviousRooms;
     }
-    
+
     /**
      * Retourne l'inventaire du joueur
+     * 
      * @return ItemList inventaire du joueur
      */
     public ItemList getInventory() {
@@ -109,6 +121,7 @@ public class Player {
 
     /**
      * Retourne true si l'item est dans l'inventaire du joueur
+     * 
      * @param pItemName nom de l'item
      * @return boolean true si l'item est dans l'inventaire du joueur
      */
@@ -122,6 +135,7 @@ public class Player {
 
     /**
      * Retourne le poids maximal que le joueur peut porter
+     * 
      * @return int poids maximal que le joueur peut porter
      */
     public int getMaxWeight() {
@@ -130,6 +144,7 @@ public class Player {
 
     /**
      * Retourne le poids actuel de l'inventaire du joueur
+     * 
      * @return int poids actuel de l'inventaire du joueur
      */
     public int getCurrentWeight() {
@@ -138,6 +153,7 @@ public class Player {
 
     /**
      * Retourne true si le joueur peut porter l'item
+     * 
      * @param pItemWeight
      * @return boolean true si le joueur peut porter l'item
      */
@@ -151,6 +167,7 @@ public class Player {
 
     /**
      * Retourne la String de l'inventaire du joueur
+     * 
      * @return String de l'inventaire du joueur
      */
     public String getInventoryString() {
@@ -160,6 +177,7 @@ public class Player {
     // Setters
     /**
      * Définit la salle actuelle du joueur
+     * 
      * @param pCurrentRoom salle actuelle du joueur
      */
     public void setCurrentRoom(final Room pCurrentRoom) {
@@ -168,5 +186,21 @@ public class Player {
 
     public void setMaxWeight(final int pMaxWeight) {
         this.aMaxWeight = pMaxWeight;
+    }
+
+    /**
+     * Remove an item from the inventory
+     */
+    public void removeItem(final String pItemName) {
+        this.aInventory.removeItem(pItemName);
+    }
+
+    /**
+     * Get an item from the inventory
+     * 
+     * @param pItemName name of the item
+     */
+    public Item getItem(final String pItemName) {
+        return this.aInventory.getItem(pItemName);
     }
 }

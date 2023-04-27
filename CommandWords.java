@@ -28,7 +28,10 @@ public class CommandWords
             "take",
             "drop",
             "test",
-            "respawn"
+            "respawn",
+            "eat",
+            "charge",
+            "fire",
         };
     } // CommandWords()
     /**
