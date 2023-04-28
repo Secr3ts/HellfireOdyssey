@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.HashMap;
 
 /**
  * Classe GameEngine - le moteur du jeu d'aventure Zuul.
@@ -11,7 +12,7 @@ public class GameEngine {
     private Parser aParser;
     private UserInterface aGui;
     private Player aPlayer;
-    private Room[] aRooms;
+    private HashMap<String, Room> aRooms;
     private Room spawnRoom;
 
     /**
@@ -75,9 +76,7 @@ public class GameEngine {
                 "Images/lake_cocytus.jpeg");
 
         // Create array of rooms
-        this.aRooms = new Room[] { vLimbo, vCharonsFerry, vLimboCitadel, vLust, vMarrakech, vGluttony, vAvarice,
-                vWheelOfFortune, vWrath, vRiverStyx, vHeresy, vCityOfDis, vViolence, vPhlegethon, vBurningSands, vFraud,
-                vMalebolge, vTreachery, vParadise, vHell };
+
 
         // Initialise room exits
 
@@ -162,6 +161,9 @@ public class GameEngine {
         Item vMagicCookie = new Item("magiccookie", "A magic cookie that will give you double inventory capacity", 0,
                 0);
 
+        Beamer vBeamer = new Beamer("beamer", "A beamer that will teleport you to the last room you beamed from", 20,
+                10);
+
         // Add Items to rooms
         vLimbo.addItem(vLordBlessing.getName(), vLordBlessing);
         vLimbo.addItem(vDeathScythe.getName(), vDeathScythe);
@@ -195,6 +197,30 @@ public class GameEngine {
         vTreachery.addItem(null, null);
 
         vLakeCocytus.addItem(vHeadOfLucifer.getName(), vHeadOfLucifer);
+
+        vLimbo.addItem(vBeamer.getName(), vBeamer);
+
+        // Add all Rooms to the HashMap
+        this.aRooms = new HashMap<String, Room>();
+        this.aRooms.put("Limbo", vLimbo);
+        this.aRooms.put("LimboCitadel", vLimboCitadel);
+        this.aRooms.put("Lust", vLust);
+        this.aRooms.put("Marrakech", vMarrakech);
+        this.aRooms.put("Avarice", vAvarice);
+        this.aRooms.put("WheelOfFortune", vWheelOfFortune);
+        this.aRooms.put("Wrath", vWrath);
+        this.aRooms.put("Heresy", vHeresy);
+        this.aRooms.put("Violence", vViolence);
+        this.aRooms.put("Phlegethon", vPhlegethon);
+        this.aRooms.put("BurningSands", vBurningSands);
+        this.aRooms.put("Fraud", vFraud);
+        this.aRooms.put("Malebolge", vMalebolge);
+        this.aRooms.put("Treachery", vTreachery);
+        this.aRooms.put("LakeCocytus", vLakeCocytus);
+        this.aRooms.put("Hell", vHell);
+        this.aRooms.put("Paradise", vParadise);
+
+        
 
         // Initial Room
         this.aPlayer = new Player("Gr4ve", vLimbo);
