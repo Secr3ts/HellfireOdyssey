@@ -376,8 +376,8 @@ public class GameEngine {
             this.aGui.println("You can't charge " + vItemName + " !");
             return;
         }
-
-        Beamer vBeamer = (Beamer) this.aPlayer.getItem(vItemName);
+        Item vItem = this.aPlayer.getItem(vItemName);
+        Beamer vBeamer = (Beamer)vItem;
         if (vBeamer.isCharged()) {
             this.aGui.println("The beamer is already charged !");
             return;
