@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=TransporterRoom
+comment0.text=\r\n\ Class\ TransporterRoom\r\n
+comment1.params=pRoomName\ pImageName\ pIsTrapDoor
+comment1.target=TransporterRoom(java.lang.String,\ java.lang.String,\ boolean)
+comment2.params=pRooms
+comment2.target=void\ addRooms(java.util.ArrayList)
+comment3.params=
+comment3.target=Room\ getRandomExit()
+comment3.text=\r\n\ Room\r\n\ \r\n\ @param\ pDirection\ Direction\ to\ get\ the\ exit\r\n\ @return\ the\ exit\ room\ (random)\r\n
+numComments=4

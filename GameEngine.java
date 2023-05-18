@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -46,7 +47,11 @@ public class GameEngine {
         Room vHeresy = new Room("Heresy, Sixth Circle of Hell, Residence of all the Heretics", "Images/heresy.jpeg");
         Room vViolence = new Room("Violence, Seventh Circle of Hell, Residence of all the Violent",
                 "Images/violence.png");
-        Room vFraud = new Room("Fraud, Eighth Circle of Hell, Jail of all the Fraudulent", "Images/fraud.jpeg");
+
+        // FRAUD has been moved to a TransporterRoom
+
+        TransporterRoom vFraud = new TransporterRoom("Fraud, Eighth Circle of Hell, Jail of all the Fraudulent", "Images/fraud.jpeg", false);
+        
         Room vTreachery = new Room("Treachery, Ninth Circle of Hell, Residence of all the Treacherous",
                 "Images/treachery.jpeg");
         Room vParadise = new Room("Paradise, your final destination for salvation", "Images/paradise.jpeg");
@@ -76,7 +81,6 @@ public class GameEngine {
                 "Images/lake_cocytus.jpeg");
 
         // Create array of rooms
-
 
         // Initialise room exits
 
@@ -124,7 +128,6 @@ public class GameEngine {
 
         vBurningSands.setExit("south", vFraud);
 
-        // image.pngvFraud.setExit("north", vViolence);
         vFraud.setExit("south", vMalebolge);
 
         vMalebolge.setExit("north", vFraud);
@@ -220,7 +223,10 @@ public class GameEngine {
         this.aRooms.put("Hell", vHell);
         this.aRooms.put("Paradise", vParadise);
 
-        
+        ArrayList<Room> aRoomArray = new ArrayList<Room>(this.aRooms.values());
+
+        vFraud.addRooms(aRoomArray);
+
 
         // Initial Room
         this.aPlayer = new Player("Gr4ve", vLimbo);
@@ -252,6 +258,13 @@ public class GameEngine {
             return;
         }
 
+        if (this.aPlayer.getCurrentRoom().getClass().equals(TransporterRoom.class)) {
+            TransporterRoom vTransporterRoom = (TransporterRoom) this.aPlayer.getCurrentRoom();
+            this.aPlayer.setCurrentRoom(vTransporterRoom.getRandomExit());
+            // On vide la liste des salles précédentes
+            this.aPlayer.getPreviousRooms().clear();
+        }
+        
         this.aPlayer.goRoom(vDirection);
         this.printLocationInfo();
     }
@@ -377,7 +390,7 @@ public class GameEngine {
             return;
         }
         Item vItem = this.aPlayer.getItem(vItemName);
-        Beamer vBeamer = (Beamer)vItem;
+        Beamer vBeamer = (Beamer) vItem;
         if (vBeamer.isCharged()) {
             this.aGui.println("The beamer is already charged !");
             return;

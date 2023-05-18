@@ -14,13 +14,13 @@ public class RoomRandomizer {
      * 
      * @param pRooms The ArrayList containing all GameEngine's Rooms
      */
-    public RoomRandomizer(final ArrayList<Room> pRooms) {
-        this.aRooms = pRooms;
+    public RoomRandomizer() {
+        this.aRooms = new ArrayList<Room>();
         this.aRandom = new Random();
     }
 
     /**
-     * Add a Room to the ArrayList just in case
+     * Add a Room to the ArrayList
      * 
      * @param pRoom Room to add
      */
@@ -29,11 +29,23 @@ public class RoomRandomizer {
     }
 
     /**
+     * Add a collection of Rooms to the ArrayList
+     * 
+     * @return
+     */
+    public void addRooms(final ArrayList<Room> pRooms) {
+        this.aRooms.addAll(pRooms);
+    }
+
+    /**
      * Get a random room
      * 
      * @return the random Room generated
      */
     public Room getRandomRoom() {
+        if (this.aRooms.equals(null)) {
+            return null;
+        }
         int aRandom = this.aRandom.nextInt(this.aRooms.size());
         return this.aRooms.get(aRandom);
     }
