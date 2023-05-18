@@ -18,7 +18,7 @@
      private GameEngine aEngine;
  
      /**
-      * Create the game and initialise its internal map. Create the inerface and link to it.
+      * Crée le jeu et initialise la carte du jeu (i.e. les pièces).
       */
      public Game() 
      {
@@ -28,7 +28,7 @@
      } // Game()
 
     /**
-    *  Main play routine.  Loops until end of play.
+    *  La méthode principale pour lancer le jeu. Crée une instance de la classe Game et l'exécute.
     */
     public static void main(String[] args) {
         new Game();

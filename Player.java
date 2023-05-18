@@ -4,7 +4,7 @@ import java.util.Stack;
 /**
  * Classe Player - un joueur du jeu d'aventure Zuul.
  * 
- * @author Aloïs Fournier
+ * @author Aloïs Fournier 16.04.23
  */
 public class Player {
     private String aName;
@@ -134,18 +134,18 @@ public class Player {
     }
 
     /**
-     * Charge the beamer
+     * Charge le Beamer
      * 
-     * @param Room room to charge
+     * @param Room
      */
     public void charge(final Room pRoom, final Beamer pBeamer) {
         pBeamer.charge(pRoom);
     }
 
     /**
-     * Fire the beamer
+     * Tire le Beamer
      * 
-     * @param Beamer beamer to fire
+     * @param Beamer
      */
     public void fire(Beamer vBeamer) {
         this.aPreviousRooms.push(this.aCurrentRoom);
@@ -209,14 +209,15 @@ public class Player {
     }
 
     /**
-     * Remove an item from the inventory
+     * Retire un item de l'inventaire
+     * @param pItemName nom de l'item à retirer
      */
     public void removeItem(final String pItemName) {
         this.aInventory.removeItem(pItemName);
     }
 
     /**
-     * Get an item from the inventory
+     * Retourne un item de l'inventaire
      * 
      * @param pItemName name of the item
      */

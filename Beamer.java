@@ -1,18 +1,20 @@
 /**
- * A Beamer is an item that can be used to teleport the player to a previously
- * saved room.
+ * Un beamer est un objet qui permet de se téléporter dans une salle
+ * précédemment mémorisée
+ * 
+ * @author Alois Fournier 27.04.23
  */
 public class Beamer extends Item {
     private Room aSavedRoom;
     private boolean aIsCharged = false;
 
     /**
-     * Constructor for objects of class Beamer
+     * Constructeur de la classe Beamer
      * 
-     * @param pName        the name of the Beamer
-     * @param pDescription the description of the Beamer
-     * @param pWorth       the worth of the Beamer
-     * @param pWeight      the weight of the Beamer
+     * @param pName
+     * @param pDescription
+     * @param pWorth
+     * @param pWeight
      */
     public Beamer(final String pName, final String pDescription, final int pWorth, final int pWeight) {
         super(pName, pDescription, pWorth, pWeight);
@@ -21,21 +23,21 @@ public class Beamer extends Item {
     }
 
     /**
-     * @return the saved room
+     * @return la Roomm sauvegardée
      */
     public Room getSavedRoom() {
         return this.aSavedRoom;
     }
 
     /**
-     * @return true if the Beamer is charged
+     * @return vrai si le Beamer est chargé
      */
     public boolean isCharged() {
         return this.aIsCharged;
     }
 
     /**
-     * Charges the Beamer
+     * Charge le Beamer avec la salle passée en paramètre
      * 
      * @param pRoom the room to save
      */
@@ -45,7 +47,7 @@ public class Beamer extends Item {
     }
 
     /**
-     * Uncharges the Beamer
+     * Décharge le Beamer
      */
     public void uncharge() {
         this.aSavedRoom = null;
@@ -53,10 +55,9 @@ public class Beamer extends Item {
     }
 
     /**
-     * Fires the Beamer
+     * Tire le Beamer
      * 
-     * @param pPlayer the player that will be used to push the room to the stack /
-     *                remove the beamer when firing
+     * @param pPlayer
      */
     public void fire(final Player pPlayer) {
         if (this.aIsCharged) {

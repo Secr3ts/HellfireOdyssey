@@ -15,6 +15,8 @@ public class GameEngine {
     private Player aPlayer;
     private HashMap<String, Room> aRooms;
     private Room spawnRoom;
+    private boolean isTesting;
+    private String fakeRandomString;
 
     /**
      * Crée le jeu et initialise les salles.
@@ -22,7 +24,7 @@ public class GameEngine {
     public GameEngine() {
         this.aParser = new Parser();
         this.createRooms();
-
+        this.isTesting = false;
     }
 
     public void setGUI(final UserInterface pGUI) {
@@ -50,8 +52,9 @@ public class GameEngine {
 
         // FRAUD has been moved to a TransporterRoom
 
-        TransporterRoom vFraud = new TransporterRoom("Fraud, Eighth Circle of Hell, Jail of all the Fraudulent", "Images/fraud.jpeg", false);
-        
+        TransporterRoom vFraud = new TransporterRoom("Fraud, Eighth Circle of Hell, Jail of all the Fraudulent",
+                "Images/fraud.jpeg", false);
+
         Room vTreachery = new Room("Treachery, Ninth Circle of Hell, Residence of all the Treacherous",
                 "Images/treachery.jpeg");
         Room vParadise = new Room("Paradise, your final destination for salvation", "Images/paradise.jpeg");
@@ -227,7 +230,6 @@ public class GameEngine {
 
         vFraud.addRooms(aRoomArray);
 
-
         // Initial Room
         this.aPlayer = new Player("Gr4ve", vLimbo);
 
@@ -259,12 +261,16 @@ public class GameEngine {
         }
 
         if (this.aPlayer.getCurrentRoom().getClass().equals(TransporterRoom.class)) {
+            if (this.isTesting) {
+                this.aPlayer.setCurrentRoom(this.aRooms.get(this.fakeRandomString));
+            }
             TransporterRoom vTransporterRoom = (TransporterRoom) this.aPlayer.getCurrentRoom();
             this.aPlayer.setCurrentRoom(vTransporterRoom.getRandomExit());
             // On vide la liste des salles précédentes
             this.aPlayer.getPreviousRooms().clear();
+            return;
         }
-        
+
         this.aPlayer.goRoom(vDirection);
         this.printLocationInfo();
     }
@@ -359,12 +365,37 @@ public class GameEngine {
             case "fire":
                 this.fire(vCommand);
                 break;
+            case "alea":
+                this.alea(vCommand);
+                break;
             default:
                 this.aGui.println("Command not implemented yet");
                 break;
         }
 
         this.runMechanics();
+    }
+
+    private void alea(Command vCommand) {
+        if (!vCommand.hasSecondWord()) {
+            this.aGui.println("Alea what ?");
+            return;
+        }
+
+        if (!this.isTesting) {
+            this.aGui.println("You can't use this command if you are not in test mode !");
+            return;
+        }
+
+        if (!this.fakeRandomString.isEmpty() || this.fakeRandomString.equals(null)) {
+            this.aGui.println("Clearing previous alea...");
+            this.fakeRandomString = "";
+            return;
+        }
+
+        String vCommandWord = vCommand.getSecondWord();
+        this.fakeRandomString = vCommandWord;
+
     }
 
     /**
@@ -569,6 +600,8 @@ public class GameEngine {
     }
 
     private void test(final Command pCommand) {
+        this.isTesting = true;
+        this.alea(new Command("alea", "Malebolge"));
         if (!pCommand.hasSecondWord()) { // Verification de la présence d'un second mot
             this.aGui.println("What do you want to test ?");
             return;
@@ -584,5 +617,7 @@ public class GameEngine {
         } catch (final FileNotFoundException pErr) {
             this.aGui.println("Error, FNF " + pErr.toString());
         }
+        this.alea(new Command("alea", ""));
+        this.isTesting = false;
     }
 } // Game
